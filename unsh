@@ -7,13 +7,10 @@ err_echo() {
 
 # ? string value ($1) among string values ($2..$n)
 s_in_ss() {
-	local value=$1
-	shift
-	local valueset=$@
-	local avalue
-	for avalue in $valueset ; do
-	  if [ "$avalue" = "$value" ]; then
-		  return 0
+	local value=$1; shift;
+	for avalue in $@; do
+		if [ "$avalue" = "$value" ]; then
+			return 0
 		fi
 	done
 
