@@ -1,0 +1,21 @@
+# Source this for fun and profit.
+
+# echo : but to stderr
+err_echo() {
+	>&2 echo $@
+}
+
+# ? string value ($1) among string values ($2..$n)
+s_in_ss() {
+	local value=$1
+	shift
+	local valueset=$@
+	local avalue
+	for avalue in $valueset ; do
+	  if [ "$avalue" = "$value" ]; then
+		  return 0
+		fi
+	done
+
+	return 1
+}
