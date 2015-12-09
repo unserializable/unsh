@@ -17,14 +17,22 @@ s_in_ss() {
 	return 1
 }
 
-# echos directory name of currently running script (if any)
+# echoes directory name of currently running script (if any)
 script_dir() {
-  # relies of $0 being visible from inside the function!
-  echo $(dirname $0)
+	# relies of $0 being visible from inside the function!
+	echo $(dirname $0)
 }
 
-# echos file name (no path) of currently running script (if any)
+# echoes file name (no path) of currently running script (if any)
 script_name() {
-  # relies of $0 being visible from inside the function!
-  echo $(basename $0)
+	# relies of $0 being visible from inside the function!
+	echo $(basename $0)
+}
+
+# Finds the newest file system entry matching the pattern $1
+# Samples:
+#  :to unpack the newest "front*.zip" file to folder $FOLDER:
+#  unzip -o $(find_newest "$SOMEDIR/front*.zip") -d $FOLDER"
+find_newest() {
+	echo $(ls -t1A $1 2>/dev/null | head -n 1)
 }
