@@ -40,5 +40,5 @@ find_newest() {
 # Returns 'u'random alphanumeric string of length $1 or 15.
 rnd_alnum() {
 	if [ -z "$1" ]; then local l=15; else local l=$1; fi
-	tr -cd "[:alnum:]" < /dev/urandom | head -c$l; echo
+	tr -cd "a-zA-Z0-9" < /dev/urandom | head -c$l; echo
 }
