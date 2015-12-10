@@ -36,3 +36,9 @@ script_name() {
 find_newest() {
 	echo $(ls -t1A $1 2>/dev/null | head -n 1)
 }
+
+# Returns 'u'random alphanumeric string of length $1 or 15.
+rnd_alnum() {
+	if [ -z "$1" ]; then local l=15; else local l=$1; fi
+	tr -cd "[:alnum:]" < /dev/urandom | head -c$l; echo
+}
