@@ -1,14 +1,15 @@
 # Source this for fun and profit.
 
-# echo : but to stderr
+# Echoes arguments to stderr (>&2)
 err_echo() {
 	>&2 echo $@
 }
 
-# ? string value ($1) among string values ($2..$n)
+# Returns whether string value ($1) among string values ($2..$n).
 s_in_ss() {
 	local value=$1; shift;
-	for avalue in $@; do
+    local avalue
+	for avalue ; do
 		if [ "$avalue" = "$value" ]; then
 			return 0
 		fi
@@ -17,13 +18,13 @@ s_in_ss() {
 	return 1
 }
 
-# echoes directory name of currently running script (if any)
+# Echoes directory name of currently running script (if any)
 script_dir() {
 	# relies of $0 being visible from inside the function!
 	echo $(dirname $0)
 }
 
-# echoes file name (no path) of currently running script (if any)
+# Echoes file name (no path) of currently running script (if any)
 script_name() {
 	# relies of $0 being visible from inside the function!
 	echo $(basename $0)
@@ -39,6 +40,10 @@ find_newest() {
 
 # Returns 'u'random alphanumeric string of length $1 or 15.
 rnd_alnum() {
-	if [ -z "$1" ]; then local l=15; else local l=$1; fi
-	tr -cd "a-zA-Z0-9" < /dev/urandom | head -c$l; echo
+	tr -cd "a-zA-Z0-9" < /dev/urandom | head -c${1-15}; echo
+}
+
+# Translates newlines from stdin to character $1.
+tr_nl() {
+	tr '\n' '$1'
 }
