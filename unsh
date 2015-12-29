@@ -1,5 +1,8 @@
 # Source this for fun and profit.
 
+# Ideas
+#  - reverse echo: ohce -- reversed unquoted params
+
 # Echoes arguments to stderr (>&2)
 err_echo() {
 	>&2 echo $@
@@ -18,18 +21,6 @@ s_in_ss() {
 	return 1
 }
 
-# Echoes directory name of currently running script (if any)
-script_dir() {
-	# relies of $0 being visible from inside the function!
-	echo $(dirname $0)
-}
-
-# Echoes file name (no path) of currently running script (if any)
-script_name() {
-	# relies of $0 being visible from inside the function!
-	echo $(basename $0)
-}
-
 # Finds the newest file system entry matching the pattern $1
 # Samples:
 #  :to unpack the newest "front*.zip" file to folder $FOLDER:
@@ -45,5 +36,15 @@ rnd_alnum() {
 
 # Translates newlines from stdin to character $1.
 tr_nl() {
-	tr '\n' '$1'
+	tr '\n' "$1"
+}
+
+# Performs HTTP GET to produce output $1 from URL $2
+http_get() {
+	local outname="$1" url="$2"
+	local get_cmd=wget --no-verbose --tries=1 --prefer-family=IPv4 --https-only --no-cache --output-document="$outname" "$url"
+	if command -V curl > /dev/null; then  # prefer curl if available
+		get_cmd=curl -s --retry 1 --ipv4 --proto =https --output "$outname" "$url"
+	fi
+	$get_cmd
 }
