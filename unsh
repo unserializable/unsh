@@ -48,3 +48,9 @@ http_get() {
 	fi
 	$get_cmd
 }
+
+# Is port $1 open on localhost/loopback?
+tcp_open() {
+  >/dev/null nc -z 127.0.0.1 $1
+  return $?
+}
