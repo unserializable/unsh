@@ -44,7 +44,7 @@ http_get() {
 	local outname="$1" url="$2"
 	local get_cmd=wget --no-verbose --tries=1 --prefer-family=IPv4 --https-only --no-cache --output-document="$outname" "$url"
 	if command -V curl > /dev/null; then  # prefer curl if available
-		get_cmd=curl -s --retry 1 --ipv4 --proto =https --output "$outname" "$url"
+		get_cmd=curl -s -L --retry 1 --ipv4 --proto =https --output "$outname" "$url"
 	fi
 	$get_cmd
 }
